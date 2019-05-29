@@ -1,7 +1,9 @@
 import { EventEmitter } from "events";
 import RestClient from "../rest/RestClient";
+import WebSocketListener from "../ws/WebSocketListener";
 
 const client = new RestClient("a","a");
+const listener = new WebSocketListener("a","a");
 
 var tempDate = new Date();
 var dateTime = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate() + ' ' + tempDate.getHours() + ':' + tempDate.getMinutes() + ':' + tempDate.getSeconds();
@@ -24,16 +26,17 @@ class Question extends EventEmitter{
         }
     }
 
-    addQuestion(questionId, userId, title, text, tags){
-        return client.createQuestion(questionId, userId, title, text, tags)
-            .then(question => {
-                this.state = {
-                    ...this.state,
-                    questions: this.state.questions.concat([question])
-                }
-                this.emit("change", this.state);
-            })
-       
+    addQuestion(questionId, userId, title, text,creationDate, tags){
+        return client.createQuestion(questionId, userId, title, text, creationDate,tags)
+            .then(question => this.appendQuestion(question));
+    }
+
+    appendQuestion(question){
+        this.state = {
+            ...this.state,
+            questions: this.state.questions.concat([question])
+        }
+        this.emit("change", this.state);
     }
 
     changeNewQuestionProperty(property, value){
@@ -65,7 +68,6 @@ class Question extends EventEmitter{
     }
 
     filterByTitle(){
-        debugger;
         return client.filterByTitle(this.state.filter).then(questions =>{
             this.state = {
                 ...this.state,
@@ -86,6 +88,13 @@ class Question extends EventEmitter{
     }
 }
 
+
 const question = new Question();
+
+listener.on("event", event => {
+    if(event.type === "QUESTION_CREATED"){
+        question.appendQuestion(event.question);
+    }
+});
 
 export default question;

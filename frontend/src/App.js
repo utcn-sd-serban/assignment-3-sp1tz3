@@ -7,6 +7,7 @@ import SmartCreateQuestion from './view/SmartCreateQuestion';
 import SmartQuestionDetails from './view/SmartQuestionDetails';
 import FilterQuestionsByTag from './view/FilterQuestionsByTag';
 import FilterQuestionsByTitle from './view/FilterQuestionsByTitle';
+import SmartCreateAnswer from './view/SmartCreateAnswer';
 
 const App = () => (
       <div className="App">
@@ -17,6 +18,7 @@ const App = () => (
             <Route exact={true} component={SmartQuestionDetails} path="/question-details/:index" />
             <Route exact={true} component={FilterQuestionsByTitle} path="/filterTitle/" />
             <Route exact={true} component={FilterQuestionsByTag} path="/filterTag/" />
+            <Route exact={true} component={SmartCreateAnswer} path="/create-answer"/>
           </Switch>
         </HashRouter>
       </div>

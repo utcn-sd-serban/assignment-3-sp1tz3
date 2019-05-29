@@ -14,7 +14,7 @@ export default class RestClient{
         }).then(response => response.json());
     }
 
-    createQuestion(questionId, userId, title, text, creationDate, tags){
+    createQuestion(questionId, userId, title, text,creationDate,tags){
         return fetch(BASE_URL + "/questions",{
             method: "POST",
             body: JSON.stringify({
@@ -33,7 +33,6 @@ export default class RestClient{
     }
 
     filterByTitle(title){
-        debugger;
         return fetch(this.BASE_URL + "/questions/filterTitle/" + title, {
             method: "GET",
             headers:{
@@ -49,5 +48,40 @@ export default class RestClient{
                 "Authorization": this.authorization
             }
         }).then(response => response.json());
+    }
+
+    createAnswer(answerId, userId, questionId, text, creationDate){
+        return fetch(BASE_URL + "/answers",{
+            method: "POST",
+            body: JSON.stringify({
+                answerId: answerId,
+                userId: userId,
+                questionId: questionId,
+                text:text,
+                creationDate: creationDate
+            }),
+            headers: {
+                "Authorization": this.authorization,
+                "Content-Type" : "application/json"
+            }
+        }).then(response => response.json());
+    }
+
+    loadAllAnswers(){
+        return fetch(BASE_URL + "/answers",{
+            method: "GET",
+            headers: {
+                "Authorization": this.authorization
+            }
+        }).then(response => response.json());
+    }
+
+    loadAnswersOnQuestion(questionId){
+        return fetch(BASE_URL + "/answers/ofQuestion/" + questionId, {
+            method: "GET",
+            headers:{
+                "Authorization": this.authorization
+            }
+        }).then(response => response.json())
     }
 }

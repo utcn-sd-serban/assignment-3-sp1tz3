@@ -1,6 +1,6 @@
 import React from 'react';
 
-const QuestionsList = ({questions, onCreateQuestion,onViewDetails,filter,onChangeFilter,onFilterByTitle,onFilterByTag}) => (
+const QuestionsList = ({questions, onCreateQuestion,onViewDetails,filter,onChangeFilter,onFilterByTitle,onFilterByTag, onCreateAnswer}) => (
     <div>
         <h2>Questions</h2>
         <table border = '1'>
@@ -30,6 +30,9 @@ const QuestionsList = ({questions, onCreateQuestion,onViewDetails,filter,onChang
         <button onClick = {onFilterByTitle}>FilterByTitle</button>
         <br />
         <button onClick = {onFilterByTag}>FilterByTag</button>
+        <br/>
+        <br/>
+        <button onClick = {onCreateAnswer}>Answer a question</button>
 
     </div>
 );

@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import question from "../model/question";
 import QuestionDetails from "./QuestionDetails";
+import answer from '../model/answer';
 
-const mapModelStateToComponentState = (questionState, props) => ({
-    question: questionState.questions[props.match.params.index]
+const mapModelStateToComponentState = (questionState, answerState ,props) => ({
+    question: questionState.questions[props.match.params.index],
+    answer: answerState.answers
 })
 
 export default class SmartQuestionDetails extends Component{
     constructor(props){
         super(props);
-        this.state = mapModelStateToComponentState(question.state, props);
-        this.listener = modelState => this.setState(mapModelStateToComponentState(question.state, this.props));
+        this.state = mapModelStateToComponentState(question.state,answer.state, props);
+        this.listener = modelState => this.setState(mapModelStateToComponentState(question.state,answer.state, this.props));
         question.addListener("change", this.listener);
     }
 
@@ -25,8 +27,7 @@ export default class SmartQuestionDetails extends Component{
     }
 
     render(){
-        debugger;
-        return (
+       return (
             <QuestionDetails
                 questionId={this.state.question.questionId}
                 userId={this.state.question.userId}

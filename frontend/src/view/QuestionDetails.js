@@ -1,4 +1,5 @@
 import React from "react";
+import AnswerList from "./AnswerList";
 
 const QuestionDetails = ({questionId, userId, title, text, creationDate, tags}) => (
     <div>
@@ -20,6 +21,7 @@ const QuestionDetails = ({questionId, userId, title, text, creationDate, tags}) 
         <br />
         <label>tags: </label>
         <span>{tags}</span>
+        <br/>
     </div>
 );
 
