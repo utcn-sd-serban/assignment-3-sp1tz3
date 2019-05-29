@@ -1,11 +1,13 @@
 package ro.utcn.sp1tz3.Assignment3.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.utcn.sp1tz3.Assignment3.dto.QuestionDTO;
 import ro.utcn.sp1tz3.Assignment3.entity.Question;
 import ro.utcn.sp1tz3.Assignment3.entity.Tag;
+import ro.utcn.sp1tz3.Assignment3.event.QuestionCreatedEvent;
 import ro.utcn.sp1tz3.Assignment3.exception.QuestionNotFoundException;
 import ro.utcn.sp1tz3.Assignment3.repository.QuestionRepository;
 import ro.utcn.sp1tz3.Assignment3.repository.TagRepository;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class QuestionManagementService {
     private final QuestionRepository questionRepository;
     private final TagRepository tagRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public List<QuestionDTO> listQuestions(){
@@ -47,9 +50,11 @@ public class QuestionManagementService {
             if(!contained) {
                 actualTags.add(tagRepository.save(t));
             }
-        };
-        return QuestionDTO.ofEntity(questionRepository.save(
+        }
+        QuestionDTO output = QuestionDTO.ofEntity(questionRepository.save(
                 new Question(userId, title, text, dateTime, actualTags)));
+        eventPublisher.publishEvent(new QuestionCreatedEvent(output));
+        return output;
     }
 
     @Transactional
@@ -60,5 +65,29 @@ public class QuestionManagementService {
 
     public QuestionDTO get(int id){
         return QuestionDTO.ofEntity(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
+    }
+
+    @Transactional
+    public List<QuestionDTO> filterByTag(String tag){
+        List<QuestionDTO> all = listQuestions();
+        List<QuestionDTO> filtered = new ArrayList<>();
+        all.forEach(t->{
+            t.getTags().forEach(t2->{
+                if(t2.equals(tag))
+                    filtered.add(t);
+            });
+        });
+        return filtered;
+    }
+
+    @Transactional
+    public List<QuestionDTO> filterByTitle(String title){
+        List<QuestionDTO> all = listQuestions();
+        List<QuestionDTO> filtered = new ArrayList<>();
+        all.forEach(t->{
+            if(t.getTitle().contains(title))
+                filtered.add(t);
+        });
+        return filtered;
     }
 }

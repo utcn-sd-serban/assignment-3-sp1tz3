@@ -4,17 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.utcn.sp1tz3.Assignment3.dto.AnswerDTO;
+import ro.utcn.sp1tz3.Assignment3.dto.QuestionDTO;
 import ro.utcn.sp1tz3.Assignment3.entity.Answer;
+import ro.utcn.sp1tz3.Assignment3.entity.Question;
+import ro.utcn.sp1tz3.Assignment3.entity.Tag;
 import ro.utcn.sp1tz3.Assignment3.exception.AnswerNotFoundException;
 import ro.utcn.sp1tz3.Assignment3.repository.AnswerRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AnswerManagementsService {
+public class AnswerManagementService {
     private final AnswerRepository repositoryFactory;
 
     @Transactional
@@ -23,19 +27,8 @@ public class AnswerManagementsService {
     }
 
     @Transactional
-    public AnswerDTO addAnswer(int questionId, int userId, String text, LocalDateTime creationDate){
-        return AnswerDTO.ofEntity(repositoryFactory.save(new Answer(questionId, userId, text, creationDate)));
-    }
-
-    @Transactional
-    public AnswerDTO addAnswer(AnswerDTO dto){
-        Answer answer = new Answer();
-        answer.setAnswerId(dto.getAnswerId());
-        answer.setQuestionId(dto.getQuestionId());
-        answer.setUserId(dto.getUserId());
-        answer.setText(dto.getText());
-        answer.setCreationDate(LocalDateTime.parse(dto.getCreationDate()));
-        return AnswerDTO.ofEntity(repositoryFactory.save(answer));
+    public AnswerDTO addAnswer(int questionId, int userId, String text){
+        return AnswerDTO.ofEntity(repositoryFactory.save(new Answer(questionId, userId, text, LocalDateTime.now())));
     }
 
     @Transactional
@@ -54,6 +47,17 @@ public class AnswerManagementsService {
         answer.setText(text);
         answer.setCreationDate(LocalDateTime.now());
         return AnswerDTO.ofEntity(repositoryFactory.save(answer));
+    }
+
+    @Transactional
+    public List<AnswerDTO> getAnswersOfQuestion(int questionId){
+        List<AnswerDTO> allAnswers = listAnswers();
+        List<AnswerDTO> neededAnswers = new ArrayList<>();
+        allAnswers.forEach(a->{
+            if(a.getQuestionId() == questionId)
+                neededAnswers.add(a);
+        });
+        return neededAnswers;
     }
 
 }

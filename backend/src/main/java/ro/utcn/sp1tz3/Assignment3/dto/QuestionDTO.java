@@ -1,5 +1,6 @@
 package ro.utcn.sp1tz3.Assignment3.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ro.utcn.sp1tz3.Assignment3.entity.Question;
 
@@ -13,6 +14,7 @@ public class QuestionDTO {
     private String title;
     private String text;
     private String creationDate;
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<String> tags = new ArrayList<>();
 
     public static QuestionDTO ofEntity(Question question){
