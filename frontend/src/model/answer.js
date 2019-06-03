@@ -13,7 +13,7 @@ class Answer extends EventEmitter{
             answers: [],
             newAnswer:{
                 answerId: -1,
-                userId: 1,
+                userId: 49,
                 questionId: -1,
                 text: "",
                 creationDate: dateTime
@@ -63,7 +63,7 @@ class Answer extends EventEmitter{
             answers => {
                 this.state = {
                     ...this.state,
-                    answerOfQuestion: answers
+                    answersOfQuestion: answers
                 }
                 this.state.emit("change", this.state);
             }

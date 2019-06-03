@@ -3,9 +3,10 @@ import question from "../model/question";
 import QuestionDetails from "./QuestionDetails";
 import answer from '../model/answer';
 
+
 const mapModelStateToComponentState = (questionState, answerState ,props) => ({
     question: questionState.questions[props.match.params.index],
-    answer: answerState.answers
+    answer: answerState.answersOfQuestion
 })
 
 export default class SmartQuestionDetails extends Component{
@@ -35,6 +36,7 @@ export default class SmartQuestionDetails extends Component{
                 text={this.state.question.text}
                 creationDate={this.state.question.creationDate}
                 tags={this.state.question.tags}
+                answers ={this.state.answer}
                 />
         );
     }

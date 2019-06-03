@@ -10,9 +10,9 @@ class AnswerPresenter{
             answer.state.newAnswer.text,
             answer.state.newAnswer.creationDate
         );
-        answer.changeNewAnswerProperty("answerId", NaN);
+        answer.changeNewAnswerProperty("answerId", -1);
         answer.changeNewAnswerProperty("userId", 1);
-        answer.changeNewAnswerProperty("questionId", NaN);
+        answer.changeNewAnswerProperty("questionId", -1);
         answer.changeNewAnswerProperty("text", "");
         answer.changeNewAnswerProperty("creationDate", "");
         window.location.assign("#/");

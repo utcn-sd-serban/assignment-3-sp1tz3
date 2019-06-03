@@ -14,7 +14,7 @@ const QuestionsList = ({questions, onCreateQuestion,onViewDetails,filter,onChang
             <tbody>
                 {
                     questions.map((question, index) => (
-                        <tr key={index}>
+                        <tr key={index} data-cy="question">
                             <td>{question.title}</td>
                             <td>{question.text}</td>
                             <td><button onClick={() => onViewDetails(index)}>View Details</button></td>
@@ -33,7 +33,7 @@ const QuestionsList = ({questions, onCreateQuestion,onViewDetails,filter,onChang
         <br/>
         <br/>
         <button onClick = {onCreateAnswer}>Answer a question</button>
-
+        <br/>
     </div>
 );
 

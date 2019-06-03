@@ -12,7 +12,7 @@ class CreateQuestionPresenter {
             question.state.newQuestion.tags,
         );
         question.changeNewQuestionProperty("questionId", NaN);
-        question.changeNewQuestionProperty("userId", 1);
+        question.changeNewQuestionProperty("userId", 49);
         question.changeNewQuestionProperty("title", "");
         question.changeNewQuestionProperty("text", "");
         question.changeNewQuestionProperty("creationDate", "");
