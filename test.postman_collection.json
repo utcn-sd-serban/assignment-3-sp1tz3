@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "92984d18-bdd3-44d9-9df7-c2ef6b0ee99d",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET 1 question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57f00729-e5fe-44a9-8141-f06d8ea5f9e9",
+						"exec": [
+							"pm.test(\"response is ok\", function(){",
+							"    pm.response.to.have.status(200);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/questions/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"questions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all questions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST new question",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": 1,\n\t\"title\": \"ara ara\",\n\t\"text\": \"hnnngh\",\n\t\"tags\": [\"WebSocket\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/questions",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE a question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3799a82-c1a3-4cc3-9b1f-ffb816d288d9",
+						"exec": [
+							"pm.test(\"response is ok\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/questions/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"questions",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
